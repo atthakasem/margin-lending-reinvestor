@@ -13,6 +13,8 @@ Via npm
 $ npm i margin-lending-reinvestor
 ```
 
+Or download the zip package on [Github](https://github.com/atthakasem/margin-lending-reinvestor) and extract the only necessary files: `index.js` and `.env.example`.
+
 ## Usage
 
 1. Copy `.env.example` to `.env` and provide your credentials.
