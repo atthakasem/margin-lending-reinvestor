@@ -1,0 +1,24 @@
+{
+    "name": "margin-lending-reinvestor",
+    "version": "1.0.0",
+    "description": "Automatically reinvest margin lending revenues into the same cycle shortly after payout.",
+    "scripts": {
+        "build": "esbuild src/index.js --bundle --platform=node --outfile=index.js"
+    },
+    "keywords": [
+        "ftx",
+        "cryptocurrency",
+        "exchange",
+        "margin",
+        "lending"
+    ],
+    "author": "Thitithan Atthakasem",
+    "email": "atthakasem@gmail.com",
+    "license": "MIT",
+    "devDependencies": {
+        "dotenv": "^10.0.0",
+        "esbuild": "^0.12.7",
+        "ftx-api": "^1.0.12",
+        "node-cron": "^3.0.0"
+    }
+}
