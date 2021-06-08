@@ -1,4 +1,7 @@
 # Changelog
+## 1.0.4
+### Changed:
+- Readme: provide alternative install method
 ## 1.0.2
 ### Fixes:
 - Fix installation command in the readme
