@@ -1,48 +1,29 @@
-const { RestClient } = require("ftx-api");
+const Account = require("./account");
+const Exchange = require("./exchange");
 const Log = require("./log");
 
 class LendingOffer {
-    static exchange = new RestClient(process.env.API_KEY, process.env.API_SECRET);
     static minRate = 0.000001;
 
-    static create(currency) {
-        return new Promise((resolve) => {
-            this.exchange
-                .getBalances()
-                .then((response) => {
-                    resolve({
-                        coin: currency,
-                        rate: this.minRate,
-                        size: this.getTotalCurrencySize(response.result, currency),
-                    });
-                })
-                .catch((error) => Log.append("GET BALANCE ERROR", error));
-        });
+    static async create(currency) {
+        return {
+            coin: currency,
+            rate: this.minRate,
+            size: await Account.getBalance(currency),
+        };
     }
 
-    static submit(offer) {
-        Log.append("Submitting offer", offer);
+    static async submit(offer) {
+        Log.write("Submitting offer", offer);
 
-        return new Promise((resolve) => {
-            this.exchange
-                .submitLendingOffer(offer)
-                .then((response) => {
-                    Log.append("Offer accepted", response);
-                    resolve(response);
-                })
-                .catch((error) => Log.append("OFFER SUBMISSION ERROR", error));
-        });
-    }
-
-    static getTotalCurrencySize(array, currency) {
-        let matches = array.filter((v) => v.coin === currency);
-
-        if (matches.length === 1) {
-            return matches[0].total;
-        } else {
-            throw new Error("Could not find exactly 1 match for given currency.");
-        }
+        return new Exchange().api
+            .submitLendingOffer(offer)
+            .then((response) => {
+                Log.write("Offer accepted", response);
+                return response;
+            })
+            .catch((error) => Log.error("OFFER SUBMISSION ERROR", error));
     }
 }
 
-module.exports = LendingOffer;
+module.exports = LendingOffer
