@@ -10,7 +10,7 @@ Automatically reinvest margin lending revenues into the same cycle shortly after
 Via npm
 
 ```bash
-$ npm i atthakasem/margin-lending-reinvestor
+$ npm i margin-lending-reinvestor
 ```
 
 ## Usage
