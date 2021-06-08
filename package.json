@@ -1,6 +1,6 @@
 {
     "name": "margin-lending-reinvestor",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Automatically reinvest margin lending revenues into the same cycle shortly after payout.",
     "scripts": {
         "build": "esbuild src/index.js --bundle --platform=node --outfile=index.js"
