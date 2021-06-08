@@ -10896,19 +10896,52 @@ var require_lib = __commonJS({
   }
 });
 
+// src/exchange.js
+var require_exchange = __commonJS({
+  "src/exchange.js"(exports2, module2) {
+    var { RestClient } = require_lib();
+    var Exchange = class {
+      constructor() {
+        if (this.instance) {
+          return this.instance;
+        }
+        this.api = new RestClient(process.env.API_KEY, process.env.API_SECRET);
+      }
+    };
+    __publicField(Exchange, "instance");
+    module2.exports = Exchange;
+  }
+});
+
 // src/log.js
 var require_log = __commonJS({
   "src/log.js"(exports2, module2) {
     var fs = require("fs");
     var Log = class {
-      static append(string, object) {
+      static write(string, object) {
+        this._append(string, false, object);
+      }
+      static error(string, object) {
+        this._append(string, true, object);
+      }
+      static _append(string, isError, object) {
+        let line = this._createLine(string, object);
+        if (isError) {
+          console.error(line);
+        } else {
+          console.log(line);
+        }
+        this._appendFile(line);
+      }
+      static _createLine(string, object) {
         let now = new Date().toISOString();
         let objString = "";
         if (object !== void 0) {
           objString = ": " + JSON.stringify(object);
         }
-        let line = "[" + now + "] " + string + objString;
-        console.log(line);
+        return "[" + now + "] " + string + objString;
+      }
+      static _appendFile(line) {
         fs.appendFile(this.file, line + "\n", (err) => {
           if (err) {
             console.error(err);
@@ -10922,33 +10955,19 @@ var require_log = __commonJS({
   }
 });
 
-// src/lendingOffer.js
-var require_lendingOffer = __commonJS({
-  "src/lendingOffer.js"(exports2, module2) {
-    var { RestClient } = require_lib();
+// src/account.js
+var require_account = __commonJS({
+  "src/account.js"(exports2, module2) {
+    var Exchange = require_exchange();
     var Log = require_log();
-    var LendingOffer2 = class {
-      static create(currency) {
-        return new Promise((resolve) => {
-          this.exchange.getBalances().then((response) => {
-            resolve({
-              coin: currency,
-              rate: this.minRate,
-              size: this.getTotalCurrencySize(response.result, currency)
-            });
-          }).catch((error) => Log.append("GET BALANCE ERROR", error));
-        });
+    var Account2 = class {
+      static async confirmConnection() {
+        return new Exchange().api.getAccount().then(() => Log.write("Connection established")).catch((error) => Log.error("CHECK CONNECTION ERROR", error));
       }
-      static submit(offer) {
-        Log.append("Submitting offer", offer);
-        return new Promise((resolve) => {
-          this.exchange.submitLendingOffer(offer).then((response) => {
-            Log.append("Offer accepted", response);
-            resolve(response);
-          }).catch((error) => Log.append("OFFER SUBMISSION ERROR", error));
-        });
+      static async getBalance(currency) {
+        return new Exchange().api.getBalances().then((response) => this._getTotalCurrencySize(response.result, currency)).catch((error) => Log.error("GET BALANCE ERROR", error));
       }
-      static getTotalCurrencySize(array, currency) {
+      static _getTotalCurrencySize(array, currency) {
         let matches = array.filter((v) => v.coin === currency);
         if (matches.length === 1) {
           return matches[0].total;
@@ -10957,7 +10976,32 @@ var require_lendingOffer = __commonJS({
         }
       }
     };
-    __publicField(LendingOffer2, "exchange", new RestClient(process.env.API_KEY, process.env.API_SECRET));
+    module2.exports = Account2;
+  }
+});
+
+// src/lendingOffer.js
+var require_lendingOffer = __commonJS({
+  "src/lendingOffer.js"(exports2, module2) {
+    var Account2 = require_account();
+    var Exchange = require_exchange();
+    var Log = require_log();
+    var LendingOffer2 = class {
+      static async create(currency) {
+        return {
+          coin: currency,
+          rate: this.minRate,
+          size: await Account2.getBalance(currency)
+        };
+      }
+      static async submit(offer) {
+        Log.write("Submitting offer", offer);
+        return new Exchange().api.submitLendingOffer(offer).then((response) => {
+          Log.write("Offer accepted", response);
+          return response;
+        }).catch((error) => Log.error("OFFER SUBMISSION ERROR", error));
+      }
+    };
     __publicField(LendingOffer2, "minRate", 1e-6);
     module2.exports = LendingOffer2;
   }
@@ -10966,9 +11010,12 @@ var require_lendingOffer = __commonJS({
 // src/index.js
 require_main().config();
 var cron = require_node_cron();
+var Account = require_account();
 var LendingOffer = require_lendingOffer();
-cron.schedule("2 * * * *", () => {
-  LendingOffer.create("USD").then((offer) => LendingOffer.submit(offer));
+Account.confirmConnection().then(() => {
+  cron.schedule("2 * * * *", () => {
+    LendingOffer.create("USD").then((offer) => LendingOffer.submit(offer));
+  });
 });
 //! Copyright (c) JS Foundation and other contributors
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
