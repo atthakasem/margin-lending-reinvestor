@@ -5,6 +5,13 @@ Automatically reinvest margin lending revenues into the same cycle shortly after
 ## Supported exchanges
 - [FTX](https://ftx.com/)
 
+## What it does in the background
+1. Runs every hour at minute 2 (since FTX pays out every full hour) and performs the following steps via API calls.
+2. Lends the desired coin in your wallet (default "USD and Stablecoins").
+![Readme explanation 1](https://www.fullauto.dev/img/readme_explanation_1.png)
+3. Uses all available funds as lending offer ("MAX" button), sets the hourly rate as low as possible, then submits the offer.
+![Readme explanation 2](https://www.fullauto.dev/img/readme_explanation_2.png)
+
 ## Installation
 
 Via npm
