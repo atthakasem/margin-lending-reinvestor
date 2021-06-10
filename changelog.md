@@ -1,4 +1,8 @@
 # Changelog
+
+## 1.0.5
+### Added:
+- Readme: provide explanations on what it does in the background
 ## 1.0.4
 ### Changed:
 - Readme: provide alternative install method
