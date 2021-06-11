@@ -5,6 +5,10 @@
     "scripts": {
         "build": "esbuild src/index.js --bundle --platform=node --outfile=index.js"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/atthakasem/margin-lending-reinvestor"
+    },
     "keywords": [
         "ftx",
         "cryptocurrency",
