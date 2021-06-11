@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.6
+### Added:
+- package.json: add github repo info
 ## 1.0.5
 ### Added:
 - Readme: provide explanations on what it does in the background
