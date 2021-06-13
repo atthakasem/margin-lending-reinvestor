@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.8
+### Updated:
+- Update dev dependencies
 ## 1.0.7
 ### Changed:
 - Readme: remove installation via npm (package has been unpublished) and updates to make installation and usage clearer
