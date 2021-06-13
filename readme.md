@@ -14,29 +14,44 @@ Automatically reinvest margin lending revenues into the same cycle shortly after
 
 ## Installation
 
-Via npm
-
-```bash
-$ npm i margin-lending-reinvestor
 ```
-
-Or download the zip package on [Github](https://github.com/atthakasem/margin-lending-reinvestor) and extract the only necessary files: `index.js` and `.env.example`.
+git clone https://github.com/atthakasem/margin-lending-reinvestor.git
+```
+or download the zip package and extract the only necessary files: `index.js` and `.env.example`.
 
 ## Usage
 
-1. Copy `.env.example` to `.env` and provide your credentials.
-2. Optional: change the currency to lend from "USD" to something else in `index.js`.
-3. Run the script. Use of [forever](https://www.npmjs.com/package/forever) is recommended.
-```bash
-$ node index.js
-```
+<!-- 1. Copy `.env.example` to `.env` and provide your credentials. -->
+1. Switch into the project directory:
+    ```
+    cd margin-lending-reinvestor
+    ```
+2. Copy `.env.example` to `.env`:
+    ```
+    cp .env.example .env
+    ```
+3. Edit `.env` and enter your API key credentials.
+4. Run the script:
+    ```
+    node index.js
+    ```
+    or run it detached in the background:
+    ```
+    nohup node index.js &
+    ```
+
+Outputs are stored in `margin_lending.log`.
 
 ## Build process
 
 The source code has been bundled using esbuild even though Node can run the source files as is, after installing the dependencies using `npm install`. If you make changes to the source code, consider rebuilding index.js:
-```bash
-$ npm run build
 ```
+npm run build
+```
+
+## Options
+
+The lending currency (default "USD") can be changed within `index.js`.
 
 ## Change log
 
