@@ -21,7 +21,7 @@
     "license": "MIT",
     "devDependencies": {
         "dotenv": "^10.0.0",
-        "esbuild": "^0.12.7",
+        "esbuild": "^0.12.8",
         "ftx-api": "^1.0.12",
         "node-cron": "^3.0.0"
     }
