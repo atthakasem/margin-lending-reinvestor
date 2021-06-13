@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7
+### Changed:
+- Readme: remove installation via npm (package has been unpublished) and updates to make installation and usage clearer
 ## 1.0.6
 ### Added:
 - package.json: add github repo info
