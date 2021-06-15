@@ -42,7 +42,9 @@ or download the zip package and extract the only necessary files: `index.js` and
     nohup node index.js &
     ```
 
-Outputs are stored in `margin_lending.log`.
+Outputs are stored in `margin_lending.log`:
+
+![Log output example](https://www.fullauto.dev/img/readme_log_output_example.png)
 
 ## Build process
 
