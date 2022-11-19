@@ -1,5 +1,10 @@
 # Margin Lending Reinvestor
 
+> __Warning__  
+> 
+> RIP FTX 🪦  
+> It was fun while it lasted. This project will be archived.
+
 Automatically reinvest margin lending revenues into the same cycle shortly after payout.
 
 ## Supported exchanges
