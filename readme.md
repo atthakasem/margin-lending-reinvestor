@@ -9,10 +9,10 @@ Automatically reinvest margin lending revenues into the same cycle shortly after
 1. Runs every hour at minute 2 (since FTX pays out every full hour) and performs the following steps via API calls.
 2. Lends the desired coin in your wallet (default "USD and Stablecoins").
 
-    ![Readme explanation 1](https://www.fullauto.dev/img/readme_explanation_1.png)
+    ![Readme explanation 1](https://ta-soft.dev/img/static/readme_explanation_1.png)
 3. Uses all available funds as lending offer ("MAX" button), sets the hourly rate as low as possible, then submits the offer.
 
-    ![Readme explanation 2](https://www.fullauto.dev/img/readme_explanation_2.png)
+    ![Readme explanation 2](https://ta-soft.dev/img/static/readme_explanation_2.png)
 
 ## Installation
 
@@ -44,7 +44,7 @@ or download the zip package and extract the only necessary files: `index.js` and
 
 Outputs are stored in `margin_lending.log`:
 
-![Log output example](https://www.fullauto.dev/img/readme_log_output_example.png)
+![Log output example](https://ta-soft.dev/img/static/readme_log_output_example.png)
 
 ## Build process
 
